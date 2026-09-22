@@ -63,3 +63,8 @@ The codebase is intentionally separated into client, backend and screening compo
 ## Disclaimer
 
 This project is a prototype. It does not establish whether a real identity document is genuine or fraudulent with legal certainty; results require appropriate human review.
+
+
+---
+
+**Project documentation:** [Contributing](CONTRIBUTING.md) · [Security](SECURITY.md)
