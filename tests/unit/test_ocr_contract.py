@@ -128,7 +128,7 @@ class TestContractDOBNotValidity(unittest.TestCase):
     """C. Strict separation: DOB must never populate valid_till."""
 
     def test_dob_only_card_back(self):
-        """Card back: DOB only. valid_till must be None."""
+        """Card back: DOB only. valid_till must remain empty."""
         boxes = [
             make_box("D.O.B.", y=0),
             make_box("27/12/2005", x=250, y=0),
@@ -138,10 +138,10 @@ class TestContractDOBNotValidity(unittest.TestCase):
         ]
         fields, _ = extract(boxes)
         self.assertEqual(fields.dob, "2005-12-27")
-        self.assertIsNone(fields.valid_till)
+        self.assertEqual(fields.valid_till, "")
 
     def test_dob_with_address_no_validity(self):
-        """DOB + address noise -> valid_till stays None."""
+        """DOB + address noise -> valid_till stays empty."""
         boxes = [
             make_box("D.O.B.", y=0),
             make_box("15/08/2004", x=250, y=0),
@@ -150,7 +150,7 @@ class TestContractDOBNotValidity(unittest.TestCase):
         ]
         fields, _ = extract(boxes)
         self.assertEqual(fields.dob, "2004-08-15")
-        self.assertIsNone(fields.valid_till)
+        self.assertEqual(fields.valid_till, "")
 
 
 # ===========================================================================
@@ -167,13 +167,13 @@ class TestContractNoArbitraryDate(unittest.TestCase):
             make_box("Registrar", y=50),
         ]
         fields, _ = extract(boxes)
-        self.assertIsNone(fields.valid_till)
+        self.assertEqual(fields.valid_till, "")
 
     def test_standalone_year_not_valid_till(self):
         """A standalone year value must not populate valid_till."""
         boxes = [make_box("2025-2029")]
         fields, _ = extract(boxes)
-        self.assertIsNone(fields.valid_till)
+        self.assertEqual(fields.valid_till, "")
 
     def test_phone_number_not_student_id(self):
         """10-digit number must not be captured as student_id."""
@@ -182,7 +182,7 @@ class TestContractNoArbitraryDate(unittest.TestCase):
             make_box("8789427924", x=250, y=0),
         ]
         fields, _ = extract(boxes)
-        self.assertIsNone(fields.student_id)
+        self.assertEqual(fields.student_id, "")
 
 
 # ===========================================================================
@@ -229,9 +229,9 @@ class TestContractMissingValidity(unittest.TestCase):
     """G. When no validity phrase exists, contract dict valid_till is ''."""
 
     def test_g_missing_validity_internal_none(self):
-        """Internal field is None when no validity phrase."""
+        """Internal field is empty when no validity phrase."""
         fields, _ = extract([make_box("DOB: 27/12/2005")])
-        self.assertIsNone(fields.valid_till)
+        self.assertEqual(fields.valid_till, "")
 
     def test_g_contract_dict_valid_till_empty_string(self):
         """Public contract dict maps None -> ''."""
@@ -250,7 +250,7 @@ class TestContractMissingDOB(unittest.TestCase):
     """H. When no DOB label exists, contract dict dob is ''."""
 
     def test_h_missing_dob_internal_none(self):
-        """Internal field is None when no DOB label found."""
+        """Internal field is empty when no DOB label is found."""
         fields, _ = extract([make_box("VALID TILL: 30/06/2026")])
         self.assertIsNone(fields.dob)
 
