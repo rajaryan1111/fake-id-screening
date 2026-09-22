@@ -1,5 +1,7 @@
 # Fake ID Screening
 
+[![CI](https://github.com/rajaryan1111/fake-id-screening/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/rajaryan1111/fake-id-screening/actions/workflows/ci.yml)
+
 AI-assisted identity and document screening platform for flagging potentially suspicious identity documents for human review.
 
 ## Overview
