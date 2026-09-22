@@ -9,6 +9,8 @@ on:
 jobs:
   backend:
     runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: sqlite:///:memory:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
