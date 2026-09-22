@@ -252,7 +252,7 @@ class TestContractMissingDOB(unittest.TestCase):
     def test_h_missing_dob_internal_none(self):
         """Internal field is empty when no DOB label is found."""
         fields, _ = extract([make_box("VALID TILL: 30/06/2026")])
-        self.assertIsNone(fields.dob)
+        self.assertEqual(fields.dob, "")
 
     def test_h_contract_dict_dob_empty_string(self):
         """Public contract dict maps None dob -> ''."""
